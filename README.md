@@ -7,7 +7,7 @@ Inspired by Flappy Bird
 ## Code
 
 - DerLung
-- Auto Letterbox Package by Tom Elliott (Unity Asset Store)
+- [Auto Letterbox](https://assetstore.unity.com/packages/tools/camera/auto-letterbox-56814) Package by [Tom Elliott on Unity Asset Store](https://assetstore.unity.com/publishers/19693)
 
 ## Sound Effects
 
