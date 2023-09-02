@@ -26,3 +26,7 @@ Inspired by Flappy Bird
 
 - [Game Maker's Toolkit](https://www.youtube.com/@GMTK) for helping me learn Unity through their YouTube video ["The Unity Tutorial For Complete Beginners"](https://www.youtube.com/watch?v=XtQMytORBmM)
 - [Jannikderdschinn](https://www.youtube.com/@jannikderdschinn) for playtesting and giving me helpful feedback about the game
+
+## Unity
+
+made with Unity 2022.3.6f1
