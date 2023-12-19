@@ -7,7 +7,7 @@ Inspired by Flappy Bird
 ## Code
 
 - DerLung
-- [Auto Letterbox](https://assetstore.unity.com/packages/tools/camera/auto-letterbox-56814) Package by [Tom Elliott on Unity Asset Store](https://assetstore.unity.com/publishers/19693)
+- [Auto Letterbox Package](https://assetstore.unity.com/packages/tools/camera/auto-letterbox-56814) by [Tom Elliott on Unity Asset Store](https://assetstore.unity.com/publishers/19693)
 
 ## Sound Effects
 
@@ -18,9 +18,7 @@ Inspired by Flappy Bird
 
 ## Music
 
-- Menu music: -not implemented yet-
-- Level music: -not implemented yet-
-- Credits music: -not implemented yet-
+- [Chiptunes Action Music Collection](https://opengameart.org/content/5-chiptunes-action) by [Juhani Junkala](https://juhanijunkala.com/) aka Subspace Audio
 
 ## Special Thanks
 
