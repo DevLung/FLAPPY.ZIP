@@ -9,6 +9,7 @@ public class CameraMovementScript : MonoBehaviour
     public GameObject settingsMenu;
     public GameObject credits;
     public LogicScript logic;
+    public AudioSource creditsMusic;
 
     void Update()
     {
@@ -39,9 +40,11 @@ public class CameraMovementScript : MonoBehaviour
 
     public void StartCredits()
     {
-        // any state -> credits animation
         credits.SetActive(true);
+        // any open settings animation -> credits animation
         animator.SetBool("inCredits", true);
+        logic.menuMusic.Stop();
+        creditsMusic.Play();
     }
     public void StopCredits()
     {

@@ -15,7 +15,7 @@ public class VolumeControlScript : MonoBehaviour
     public Text SFXVolumeText;
     public Slider musicVolumeSlider;
     public Text musicVolumeText;
-    private int maxSliderValue = 100;
+    private const int MaxSliderValue = 100;
 
     void Start()
     {
@@ -28,12 +28,13 @@ public class VolumeControlScript : MonoBehaviour
                 PlayerPrefs.SetFloat(item, 1);
             }
         }
-        masterVolumeSlider.value = PlayerPrefs.GetFloat("master volume") * maxSliderValue;
+        masterVolumeSlider.value = PlayerPrefs.GetFloat("master volume") * MaxSliderValue;
         ChangeMasterVolume();
-        SFXVolumeSlider.value = PlayerPrefs.GetFloat("SFX volume") * maxSliderValue;
+        SFXVolumeSlider.value = PlayerPrefs.GetFloat("SFX volume") * MaxSliderValue;
         ChangeSFXVolume();
-        musicVolumeSlider.value = PlayerPrefs.GetFloat("Music volume") * maxSliderValue;
+        musicVolumeSlider.value = PlayerPrefs.GetFloat("Music volume") * MaxSliderValue;
         ChangeMusicVolume();
+        Debug.Log(PlayerPrefs.GetFloat("Music volume"));
     }
 
     public void ChangeMasterVolume()
@@ -59,7 +60,7 @@ public class VolumeControlScript : MonoBehaviour
             mixer.SetFloat(group, -80.0f);
         } else
         {
-            float Gain = Mathf.Log10(sliderValue / maxSliderValue) * 20.0f;
+            float Gain = Mathf.Log10(sliderValue / MaxSliderValue) * 20.0f;
             mixer.SetFloat(group, Gain);
         }
 

@@ -16,14 +16,14 @@ public class CharacterScript : MonoBehaviour
     {
         logic = GameObject.FindGameObjectWithTag("Logic").GetComponent<LogicScript>();
         // after pressing space in start menu
-        flap();
+        Flap();
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space) && birdIsAlive)
         {
-            flap();
+            Flap();
         }
 
         // Game over if out of bounds
@@ -37,7 +37,7 @@ public class CharacterScript : MonoBehaviour
         }
     }
 
-    private void flap()
+    private void Flap()
     {
         myRigidbody.velocity = Vector2.up * flapHeight;
         flapSound.Play();
