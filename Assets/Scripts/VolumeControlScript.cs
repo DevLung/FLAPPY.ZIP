@@ -34,7 +34,6 @@ public class VolumeControlScript : MonoBehaviour
         ChangeSFXVolume();
         musicVolumeSlider.value = PlayerPrefs.GetFloat("Music volume") * MaxSliderValue;
         ChangeMusicVolume();
-        Debug.Log(PlayerPrefs.GetFloat("Music volume"));
     }
 
     public void ChangeMasterVolume()
