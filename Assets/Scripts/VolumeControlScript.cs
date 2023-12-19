@@ -21,18 +21,18 @@ public class VolumeControlScript : MonoBehaviour
     {
         // if some of the keys don't exist, add them on max volume
         string[] mixerGroups = { "master volume", "SFX volume", "Music volume" };
-        foreach (var item in mixerGroups)
+        foreach (string item in mixerGroups)
         {
             if (!PlayerPrefs.HasKey(item))
             {
-                PlayerPrefs.SetFloat(item, 1);
+                PlayerPrefs.SetFloat(item, MaxSliderValue);
             }
         }
-        masterVolumeSlider.value = PlayerPrefs.GetFloat("master volume") * MaxSliderValue;
+        masterVolumeSlider.value = PlayerPrefs.GetFloat("master volume");
         ChangeMasterVolume();
-        SFXVolumeSlider.value = PlayerPrefs.GetFloat("SFX volume") * MaxSliderValue;
+        SFXVolumeSlider.value = PlayerPrefs.GetFloat("SFX volume");
         ChangeSFXVolume();
-        musicVolumeSlider.value = PlayerPrefs.GetFloat("Music volume") * MaxSliderValue;
+        musicVolumeSlider.value = PlayerPrefs.GetFloat("Music volume");
         ChangeMusicVolume();
     }
 
