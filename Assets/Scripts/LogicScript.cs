@@ -24,6 +24,8 @@ public class LogicScript : MonoBehaviour
     public AudioSource newHighScoreSound;
     public AudioSource pipeDeathSound;
     public AudioSource deadZoneDeathSound;
+    public AudioSource menuMusic;
+    public AudioSource levelMusic;
     public GameObject startMenu;
     public Text resetHighScoreButtonText;
     public HighScoreResetLogicScript resetHighScoreLogicScript;
@@ -61,6 +63,8 @@ public class LogicScript : MonoBehaviour
                 character.SetActive(true);
                 scoreTextObject.SetActive(true);
                 pipeSpawner.SetActive(true);
+                menuMusic.Stop();
+                levelMusic.Play();
             }
         }
     }
