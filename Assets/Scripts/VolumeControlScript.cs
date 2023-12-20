@@ -1,14 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 
 public class VolumeControlScript : MonoBehaviour
 {
-    public AudioMixer mixer;
+    public AudioMixer audioMixer;
     public Slider masterVolumeSlider;
     public Text masterVolumeText;
     public Slider SFXVolumeSlider;
@@ -52,17 +51,17 @@ public class VolumeControlScript : MonoBehaviour
         musicVolumeText.text = (musicVolumeSlider.value).ToString();
     }
 
-    void ChangeVolume(string group, float sliderValue)
+    void ChangeVolume(string exposedVolumeParam, float sliderValue)
     {
         if (sliderValue <= 0.0001)
         {
-            mixer.SetFloat(group, -80.0f);
+            audioMixer.SetFloat(exposedVolumeParam, -80.0f);
         } else
         {
-            float Gain = Mathf.Log10(sliderValue / MaxSliderValue) * 20.0f;
-            mixer.SetFloat(group, Gain);
+            float gain = Mathf.Log10(sliderValue / MaxSliderValue) * 20.0f;
+            audioMixer.SetFloat(exposedVolumeParam, gain);
         }
 
-        PlayerPrefs.SetFloat(group, sliderValue);
+        PlayerPrefs.SetFloat(exposedVolumeParam, sliderValue);
     }
 }
