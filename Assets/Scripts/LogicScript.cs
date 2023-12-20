@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Diagnostics;
+using UnityEngine.Audio;
+using Unity.VisualScripting;
 
 public class LogicScript : MonoBehaviour
 {
@@ -20,20 +22,29 @@ public class LogicScript : MonoBehaviour
     public Animator characterLeftWingAnimator;
     public Animator characterRightWingAnimator;
     public GameObject pipeSpawner;
+    public AudioMixer audioMixer;
     public AudioSource scoreSound;
     public AudioSource newHighScoreSound;
     public AudioSource pipeDeathSound;
     public AudioSource deadZoneDeathSound;
     public AudioSource menuMusic;
     public AudioSource levelMusic;
+    public AudioSource creditsMusic;
     public GameObject startMenu;
     public Text resetHighScoreButtonText;
     public HighScoreResetLogicScript resetHighScoreLogicScript;
     public GameObject uninstallConfirmationButtons;
     public Text uninstallButtonText;
+    const int FadeIn = 1;
+    const int FadeOut = 0;
 
     void Start()
     {
+        // reset music volumes
+        audioMixer.SetFloat("Menu Music volume", -80.0f);
+        audioMixer.SetFloat("Level Music volume", -80.0f);
+        audioMixer.SetFloat("Credits Music volume", -80.0f);
+
         // load high score
         if (!PlayerPrefs.HasKey("high score"))
         {
@@ -41,6 +52,8 @@ public class LogicScript : MonoBehaviour
         }
         highScore = PlayerPrefs.GetInt("high score");
         highScoreText.text = highScore.ToString();
+
+        FadeMusicInOrOut("menu", 1.5f, FadeIn);
     }
 
     void Update()
@@ -63,8 +76,9 @@ public class LogicScript : MonoBehaviour
                 character.SetActive(true);
                 scoreTextObject.SetActive(true);
                 pipeSpawner.SetActive(true);
-                menuMusic.Stop();
-                levelMusic.Play();
+                // crossfade music
+                FadeMusicInOrOut("menu", 1.5f, FadeOut);
+                FadeMusicInOrOut("level", 3.0f, FadeIn);
             }
         }
     }
@@ -90,6 +104,7 @@ public class LogicScript : MonoBehaviour
 
     public void RestartGame()
     {
+        // reload scene
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
@@ -115,6 +130,52 @@ public class LogicScript : MonoBehaviour
         characterLeftWingAnimator.SetBool("noWingAnimation", true);
         characterRightWingAnimator.SetBool("noWingAnimation", true);
         gameOverScreen.SetActive(true);
+        FadeMusicInOrOut("level", 3.0f, FadeOut);
+    }
+
+    public static IEnumerator FadeAudio(AudioMixer audioMixer, string exposedVolumeParam, AudioSource audioSource, float duration, float targetVolume)
+    {
+        float currentTime = 0;
+        audioMixer.GetFloat(exposedVolumeParam, out float currentVol);
+        currentVol = Mathf.Pow(10, currentVol / 20);
+        float targetValue = Mathf.Clamp(targetVolume, 0.0001f, 1);
+        
+        // start audio source if fade is a fade in
+        if (targetVolume == 1)
+        {
+            audioSource.Play();
+        }
+
+        while (currentTime < duration)
+        {
+            currentTime += Time.deltaTime;
+            float newVol = Mathf.Lerp(currentVol, targetValue, currentTime / duration);
+            audioMixer.SetFloat(exposedVolumeParam, Mathf.Log10(newVol) * 20);
+            yield return null;
+        }
+
+        // stop audio source if fade is a fade out
+        if (targetVolume == 0)
+        {
+            audioSource.Stop();
+        }
+
+        yield break;
+    }
+    public void FadeMusicInOrOut(string music, float duration, int fadeInOrOut)
+    {
+        if (music == "menu")
+        {
+            StartCoroutine(FadeAudio(audioMixer, "Menu Music volume", menuMusic, duration, fadeInOrOut));
+        }
+        else if (music == "level")
+        {
+            StartCoroutine(FadeAudio(audioMixer, "Level Music volume", levelMusic, duration, fadeInOrOut));
+        }
+        else if (music == "credits")
+        {
+            StartCoroutine(FadeAudio(audioMixer, "Credits Music volume", creditsMusic, duration, fadeInOrOut));
+        }
     }
 
     public void ResetHighscore()

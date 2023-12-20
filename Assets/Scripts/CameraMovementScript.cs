@@ -10,6 +10,8 @@ public class CameraMovementScript : MonoBehaviour
     public GameObject credits;
     public LogicScript logic;
     public AudioSource creditsMusic;
+    const int FadeIn = 1;
+    const int FadeOut = 0;
 
     void Update()
     {
@@ -43,8 +45,9 @@ public class CameraMovementScript : MonoBehaviour
         credits.SetActive(true);
         // any open settings animation -> credits animation
         animator.SetBool("inCredits", true);
-        logic.menuMusic.Stop();
-        creditsMusic.Play();
+        // crossfade music
+        logic.FadeMusicInOrOut("menu", 1.0f, FadeOut);
+        logic.FadeMusicInOrOut("credits", 3.0f, FadeIn);
     }
     public void StopCredits()
     {
