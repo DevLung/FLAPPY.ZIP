@@ -18,6 +18,7 @@ public class LogicScript : MonoBehaviour
     public GameObject scoreTextObject;
     public GameObject gameOverScreen;
     public CharacterScript characterScript;
+    public CameraMovementScript CameraMovementScript;
     public GameObject character;
     public Animator characterLeftWingAnimator;
     public Animator characterRightWingAnimator;
@@ -70,9 +71,13 @@ public class LogicScript : MonoBehaviour
                 scoreTextObject.SetActive(false);
             }
 
-            // start game if not in settings menu and space is pressed
-            if (!settingsMenu.activeSelf && Input.GetKeyDown(KeyCode.Space))
+            // start game if space is pressed
+            if (Input.GetKeyDown(KeyCode.Space))
             {
+                if (settingsMenu.activeSelf)
+                {
+                    CameraMovementScript.CloseSettings();
+                }
                 startMenu.SetActive(false);
                 character.SetActive(true);
                 scoreTextObject.SetActive(true);
