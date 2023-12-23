@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,6 +26,8 @@ public class VolumeControlScript : MonoBehaviour
                 PlayerPrefs.SetFloat(item, MaxSliderValue);
             }
         }
+
+        // set volumes to saved values
         masterVolumeSlider.value = PlayerPrefs.GetFloat("master volume");
         ChangeMasterVolume();
         SFXVolumeSlider.value = PlayerPrefs.GetFloat("SFX volume");
