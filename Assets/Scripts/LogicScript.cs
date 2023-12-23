@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using System.Diagnostics;
 using UnityEngine.Audio;
-using Unity.VisualScripting;
 
 public class LogicScript : MonoBehaviour
 {
@@ -18,6 +16,7 @@ public class LogicScript : MonoBehaviour
     public GameObject scoreTextObject;
     public GameObject gameOverScreen;
     public CharacterScript characterScript;
+    public CameraMovementScript cameraMovementScript;
     public GameObject character;
     public Animator characterLeftWingAnimator;
     public Animator characterRightWingAnimator;
@@ -59,7 +58,6 @@ public class LogicScript : MonoBehaviour
 
     void Update()
     {
-        // when in start menu or in no start menu mode
         if (startMenu.activeSelf)
         {
             // set character, pipe Spawner, score text inactive
@@ -70,18 +68,26 @@ public class LogicScript : MonoBehaviour
                 scoreTextObject.SetActive(false);
             }
 
-            // start game if not in settings menu and space is pressed
-            if (!settingsMenu.activeSelf && Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
-                startMenu.SetActive(false);
-                character.SetActive(true);
-                scoreTextObject.SetActive(true);
-                pipeSpawner.SetActive(true);
-                // crossfade music
-                FadeMusicInOrOut("menu", 1.5f, FadeOut);
-                FadeMusicInOrOut("level", 3.0f, FadeIn);
+                StartGame();
             }
         }
+    }
+
+    private void StartGame()
+    {
+        if (settingsMenu.activeSelf)
+        {
+            cameraMovementScript.CloseSettings();
+        }
+        startMenu.SetActive(false);
+        character.SetActive(true);
+        scoreTextObject.SetActive(true);
+        pipeSpawner.SetActive(true);
+        // crossfade music
+        FadeMusicInOrOut("menu", 1.5f, FadeOut);
+        FadeMusicInOrOut("level", 3.0f, FadeIn);
     }
 
     public void AddScore(int toAdd)
@@ -134,7 +140,7 @@ public class LogicScript : MonoBehaviour
         FadeMusicInOrOut("level", 3.0f, FadeOut);
     }
 
-    public static IEnumerator FadeAudio(AudioMixer audioMixer, string exposedVolumeParam, AudioSource audioSource, float duration, float targetVolume)
+    private static IEnumerator FadeAudio(AudioMixer audioMixer, string exposedVolumeParam, AudioSource audioSource, float duration, float targetVolume)
     {
         float currentTime = 0;
         audioMixer.GetFloat(exposedVolumeParam, out float currentVol);
@@ -207,7 +213,7 @@ public class LogicScript : MonoBehaviour
     public void Uninstall()
     {
         PlayerPrefs.DeleteAll();
-        Process.Start("powershell.exe", "-Command timeout /NOBREAK 5 ; rm -Recurse ./*");
+        System.Diagnostics.Process.Start("powershell.exe", "-Command timeout /NOBREAK 5 ; rm -Recurse ./*");
         Application.Quit();
     }
 }
