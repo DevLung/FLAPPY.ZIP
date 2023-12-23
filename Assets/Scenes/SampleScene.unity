@@ -7803,6 +7803,7 @@ MonoBehaviour:
   scoreTextObject: {fileID: 493607665}
   gameOverScreen: {fileID: 1995849608}
   characterScript: {fileID: 1173642739}
+  cameraMovementScript: {fileID: 519420033}
   character: {fileID: 1173642735}
   characterLeftWingAnimator: {fileID: 1633229484}
   characterRightWingAnimator: {fileID: 439122963}
