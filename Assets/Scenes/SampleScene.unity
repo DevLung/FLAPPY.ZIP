@@ -7816,6 +7816,7 @@ MonoBehaviour:
   levelMusic: {fileID: 775961787}
   creditsMusic: {fileID: 775961788}
   startMenu: {fileID: 1712629558}
+  settingsMenu: {fileID: 1325147519}
   resetHighScoreButtonText: {fileID: 1038762428}
   resetHighScoreLogicScript: {fileID: 579355916}
   uninstallConfirmationButtons: {fileID: 1021146962}
