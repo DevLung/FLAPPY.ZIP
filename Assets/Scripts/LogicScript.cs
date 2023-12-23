@@ -31,6 +31,7 @@ public class LogicScript : MonoBehaviour
     public AudioSource levelMusic;
     public AudioSource creditsMusic;
     public GameObject startMenu;
+    public GameObject settingsMenu;
     public Text resetHighScoreButtonText;
     public HighScoreResetLogicScript resetHighScoreLogicScript;
     public GameObject uninstallConfirmationButtons;
@@ -69,8 +70,8 @@ public class LogicScript : MonoBehaviour
                 scoreTextObject.SetActive(false);
             }
 
-            // when starting game
-            if (Input.GetKeyDown(KeyCode.Space))
+            // start game if not in settings menu and space is pressed
+            if (!settingsMenu.activeSelf && Input.GetKeyDown(KeyCode.Space))
             {
                 startMenu.SetActive(false);
                 character.SetActive(true);
