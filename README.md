@@ -12,9 +12,9 @@ Inspired by Flappy Bird
 ## Sound Effects
 
 - Flap (zip) sound: DerLung
-- Score Sounds: [Kronbits on itch.io](kronbits.itch.io/freesfx)
+- Score Sounds: [Kronbits on itch.io](https://kronbits.itch.io/freesfx)
 - Death Sounds: meme sounds
-- Menu Button Sounds: [ColorAlpha on itch.io](coloralpha.itch.io/50-menu-interface-sfx)
+- Menu Button Sounds: [ColorAlpha on itch.io](https://coloralpha.itch.io/50-menu-interface-sfx)
 
 ## Music
 
