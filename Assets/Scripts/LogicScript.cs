@@ -68,7 +68,7 @@ public class LogicScript : MonoBehaviour
                 scoreTextObject.SetActive(false);
             }
 
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space) && !cameraMovementScript.animator.GetBool("inCredits"))
             {
                 StartGame();
             }
