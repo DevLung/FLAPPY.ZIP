@@ -10,19 +10,33 @@ using UnityEngine.UI;
 public class StartupScript : MonoBehaviour
 {
     public Text text;
+    public Animator animator;
+    public GameObject updatePrompt;
     const string latestVersionInfoUrl = "https://api.github.com/repos/DevLung/FLAPPY.ZIP/releases/latest";
     int currentVersion;
     int latestVersion;
+    bool newVersionAvailable = false;
+    string loadingIndicatorInfoText = "starting game";
+    public AsyncOperation sceneLoader;
+    bool activateMainSceneIfLoaded = true;
 
-    void Start()
+    async void Start()
     {
         currentVersion = latestVersion = Int32.Parse(Application.version.Replace(".", string.Empty));
 
-        CheckForUpdates();
-        SceneManager.LoadSceneAsync("MainGame");
+        loadingIndicatorInfoText = "checking for updates";
+        await CheckForUpdates();
+        if (newVersionAvailable)
+        {
+            updatePrompt.SetActive(true);
+            activateMainSceneIfLoaded = false;
+        }
+
+        loadingIndicatorInfoText = "loading scene";
+        StartCoroutine(LoadMainScene());
     }
 
-    private async void CheckForUpdates()
+    async Task CheckForUpdates()
     {
         UnityWebRequest request = UnityWebRequest.Get(latestVersionInfoUrl);
         request.SetRequestHeader("accept", "application/vnd.github+json");
@@ -40,7 +54,6 @@ public class StartupScript : MonoBehaviour
                     request.downloadHandler.text,
                     "(?<=\"tag_name\"\\s*:\\s*\")[^\"]*(?=\")"      // (?<="tag_name"\s*:\s*")[^"]*(?=")   finds  "tag_name":  and matches the following characters between the next two "
                 ).ToString();
-
             try
             {
                 latestVersion = Int32.Parse(rawLatestVersion.Replace(".", string.Empty));
@@ -49,12 +62,38 @@ public class StartupScript : MonoBehaviour
                 return;
             }
 
-            Debug.Log(currentVersion < latestVersion); // TODO implement new version available screen
+            newVersionAvailable = currentVersion < latestVersion;
+        }
+    }
+
+    IEnumerator LoadMainScene()
+    {
+        sceneLoader = SceneManager.LoadSceneAsync("MainGame");
+        sceneLoader.allowSceneActivation = false;
+
+        bool sceneReady = false;
+        while (!sceneLoader.isDone)
+        {
+            // run once as soon as scene is loaded
+            if (sceneLoader.progress >= 0.9f && !sceneReady)
+            {
+                sceneReady = true;
+
+                // stop animation
+                animator.SetBool("done", true);
+                loadingIndicatorInfoText = "Done!";
+                // remove any loading indicator dots
+                SetLoadingIndicatorDotsKeyframe(0);
+
+                sceneLoader.allowSceneActivation = activateMainSceneIfLoaded;
+            }
+
+            yield return null;
         }
     }
 
     public void SetLoadingIndicatorDotsKeyframe(int keyframe)
     {
-        text.text = string.Concat(Enumerable.Repeat(".", keyframe));
+        text.text = loadingIndicatorInfoText + string.Concat(Enumerable.Repeat(".", keyframe));
     }
 }
