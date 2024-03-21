@@ -53,9 +53,10 @@ public class StartupScript : MonoBehaviour
         {
             // extract tag name/version number from response
             string rawLatestVersion = System.Text.RegularExpressions.Regex.Match(
-                    request.downloadHandler.text,
-                    "(?<=\"tag_name\"\\s*:\\s*\")[^\"]*(?=\")"      // (?<="tag_name"\s*:\s*")[^"]*(?=")   finds  "tag_name":  and matches the following characters between the next two "
-                ).ToString();
+                request.downloadHandler.text,
+                "(?<=\"tag_name\"\\s*:\\s*\")[^\"]*(?=\")"
+                //  (?<="tag_name"\s*:\s*")[^"]*(?=")   finds  "tag_name":  and matches the following characters between the next two "
+            ).ToString();
             try
             {
                 latestVersion = Int32.Parse(rawLatestVersion.Replace(".", string.Empty));
