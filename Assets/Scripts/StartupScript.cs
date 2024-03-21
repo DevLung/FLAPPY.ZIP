@@ -13,9 +13,10 @@ public class StartupScript : MonoBehaviour
     public Text text;
     public Animator animator;
     public GameObject updatePrompt;
-    const string latestVersionInfoUrl = "https://api.github.com/repos/DevLung/FLAPPY.ZIP/releases/latest";
+    const string LatestVersionInfoUrl = "https://api.github.com/repos/DevLung/FLAPPY.ZIP/releases/latest";
     int currentVersion;
     int latestVersion;
+    public string rawLatestVersion;
     bool newVersionAvailable = false;
     string loadingIndicatorInfoText = "starting game";
     public AsyncOperation sceneLoader;
@@ -23,7 +24,8 @@ public class StartupScript : MonoBehaviour
 
     async void Start()
     {
-        versionText.text += Application.version;
+        
+        versionText.text += rawLatestVersion = Application.version;
         currentVersion = latestVersion = Int32.Parse(Application.version.Replace(".", string.Empty));
 
         loadingIndicatorInfoText = "checking for updates";
@@ -40,7 +42,7 @@ public class StartupScript : MonoBehaviour
 
     async Task CheckForUpdates()
     {
-        UnityWebRequest request = UnityWebRequest.Get(latestVersionInfoUrl);
+        UnityWebRequest request = UnityWebRequest.Get(LatestVersionInfoUrl);
         request.SetRequestHeader("accept", "application/vnd.github+json");
         UnityWebRequestAsyncOperation operation = request.SendWebRequest();
 
@@ -52,7 +54,7 @@ public class StartupScript : MonoBehaviour
         if (request.result == UnityWebRequest.Result.Success)
         {
             // extract tag name/version number from response
-            string rawLatestVersion = System.Text.RegularExpressions.Regex.Match(
+            rawLatestVersion = System.Text.RegularExpressions.Regex.Match(
                 request.downloadHandler.text,
                 "(?<=\"tag_name\"\\s*:\\s*\")[^\"]*(?=\")"
                 //  (?<="tag_name"\s*:\s*")[^"]*(?=")   finds  "tag_name":  and matches the following characters between the next two "

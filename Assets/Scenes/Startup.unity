@@ -271,6 +271,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startupScript: {fileID: 246125352}
+  robotoMono: {fileID: 12800000, guid: 2389203af961ded4b8e5b2dce53ccfaa, type: 3}
+  robotoMonoBold: {fileID: 12800000, guid: 2e2cf3f3e4c3ce84ca822e55b5ede09c, type: 3}
 --- !u!4 &664790701
 Transform:
   m_ObjectHideFlags: 0
@@ -280,7 +282,7 @@ Transform:
   m_GameObject: {fileID: 664790699}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.2110212, y: 0.7210225, z: 11.027837}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -424,7 +426,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -948.2, y: -548.3}
+  m_AnchoredPosition: {x: -948.2, y: -548.2}
   m_SizeDelta: {x: 626.7032, y: 70.9978}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1071887832

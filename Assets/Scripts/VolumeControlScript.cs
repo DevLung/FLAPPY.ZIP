@@ -11,7 +11,7 @@ public class VolumeControlScript : MonoBehaviour
     public Text SFXVolumeText;
     public Slider musicVolumeSlider;
     public Text musicVolumeText;
-    private const int MaxSliderValue = 100;
+    const int MaxSliderValue = 100;
 
     void Start()
     {
