@@ -9,6 +9,7 @@ using UnityEngine.UI;
 
 public class StartupScript : MonoBehaviour
 {
+    public Text versionText;
     public Text text;
     public Animator animator;
     public GameObject updatePrompt;
@@ -22,6 +23,7 @@ public class StartupScript : MonoBehaviour
 
     async void Start()
     {
+        versionText.text += Application.version;
         currentVersion = latestVersion = Int32.Parse(Application.version.Replace(".", string.Empty));
 
         loadingIndicatorInfoText = "checking for updates";
