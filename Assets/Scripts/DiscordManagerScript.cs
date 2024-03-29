@@ -1,13 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Discord;
 
 public class DiscordManagerScript : MonoBehaviour
 {
     Discord.Discord discord;
-    Discord.ActivityManager activityManager;
-    Discord.Activity activity;
+    ActivityManager activityManager;
+    Activity activity;
     public LogicScript logicScript;
     public long applicationId;
     public string largeImage = "icon";
@@ -20,7 +18,7 @@ public class DiscordManagerScript : MonoBehaviour
     {
         discord = new Discord.Discord(applicationId, (ulong)Discord.CreateFlags.NoRequireDiscord);
         activityManager = discord.GetActivityManager();
-        startTime = System.DateTimeOffset.Now.ToUnixTimeMilliseconds();
+        startTime = System.DateTimeOffset.Now.ToUnixTimeMilliseconds() - (long)(Time.realtimeSinceStartupAsDouble * 1000 /* to milliseconds */);
 
         activity = new Discord.Activity
         {
@@ -35,7 +33,7 @@ public class DiscordManagerScript : MonoBehaviour
             }
         };
 
-        ChangeActivity(false);
+        UpdateActivity(false);
     }
 
     void OnDisable()
@@ -48,16 +46,16 @@ public class DiscordManagerScript : MonoBehaviour
         discord.RunCallbacks();
     }
 
-    public void ChangeActivity(bool playing)
+    public void UpdateActivity(bool playing)
     {
-        activity.State = playing ? "Score: " + logicScript.playerScore.ToString() : "High Score: " + logicScript.highScore.ToString();
+        activity.State = playing ? "Score: " + logicScript.playerScore.ToString() : "High Score: " + PlayerPrefs.GetInt("high score").ToString();
         activity.Details = playing ? detailsPlaying : detailsMenu;
 
         activityManager.UpdateActivity(activity, (res) =>
         {
-            if (res != Discord.Result.Ok)
+            if (res != Result.Ok)
             {
-                Debug.LogError("Failed to connect to Discord");
+                Debug.LogError("Failed to update Discord activity");
             }
         });
     }

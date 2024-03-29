@@ -6,7 +6,7 @@ using UnityEngine.Audio;
 
 public class LogicScript : MonoBehaviour
 {
-    public int playerScore;
+    public int playerScore = 0;
     public int highScore;
     private int overOldHighScore = 0;
     public Text scoreText;
@@ -34,6 +34,7 @@ public class LogicScript : MonoBehaviour
     public HighScoreResetLogicScript resetHighScoreLogicScript;
     public GameObject uninstallConfirmationButtons;
     public Text uninstallButtonText;
+    public DiscordManagerScript discordManagerScript;
     const int FadeIn = 1;
     const int FadeOut = 0;
 
@@ -87,6 +88,8 @@ public class LogicScript : MonoBehaviour
         // crossfade music
         FadeMusicInOrOut("menu", 1.5f, FadeOut);
         FadeMusicInOrOut("level", 3.0f, FadeIn);
+
+        discordManagerScript.UpdateActivity(true);
     }
 
     public void AddScore(int amount)
@@ -94,6 +97,8 @@ public class LogicScript : MonoBehaviour
         playerScore += amount;
         scoreText.text = playerScore.ToString();
         scoreSound.Play();
+
+        discordManagerScript.UpdateActivity(true);
 
     }
     public void AddHighScore(int amount)
@@ -191,6 +196,8 @@ public class LogicScript : MonoBehaviour
         highScoreText.text = highScore.ToString();
         resetHighScoreButtonText.text = "High Score reset.";
         resetHighScoreLogicScript.UpdateButton();
+
+        discordManagerScript.UpdateActivity(false);
 
     }
     public void ResetSettings()

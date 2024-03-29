@@ -7824,6 +7824,7 @@ MonoBehaviour:
   resetHighScoreLogicScript: {fileID: 579355916}
   uninstallConfirmationButtons: {fileID: 1021146962}
   uninstallButtonText: {fileID: 1079439495}
+  discordManagerScript: {fileID: 775961789}
 --- !u!4 &775961779
 Transform:
   m_ObjectHideFlags: 0
