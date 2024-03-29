@@ -7777,6 +7777,7 @@ GameObject:
   - component: {fileID: 775961787}
   - component: {fileID: 775961788}
   - component: {fileID: 775961778}
+  - component: {fileID: 775961789}
   m_Layer: 0
   m_Name: Logic Manager
   m_TagString: Logic
@@ -8606,6 +8607,24 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &775961789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 775961777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abfd1abf207ff664fbb6331d3acf689f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  logicScript: {fileID: 775961778}
+  applicationId: 1223324288229052616
+  largeImage: icon
+  largeImageText: FLAPPY.ZIP
+  detailsPlaying: Playing
+  detailsMenu: Main Menu
 --- !u!1 &788633586
 GameObject:
   m_ObjectHideFlags: 0
