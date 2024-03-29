@@ -89,16 +89,16 @@ public class LogicScript : MonoBehaviour
         FadeMusicInOrOut("level", 3.0f, FadeIn);
     }
 
-    public void AddScore(int toAdd)
+    public void AddScore(int amount)
     {
-        playerScore += toAdd;
+        playerScore += amount;
         scoreText.text = playerScore.ToString();
         scoreSound.Play();
 
     }
-    public void AddHighScore(int toAdd)
+    public void AddHighScore(int amount)
     {
-        highScore += toAdd;
+        highScore += amount;
         PlayerPrefs.SetInt("high score", highScore);
         highScoreText.text = highScore.ToString();
         overOldHighScore++;

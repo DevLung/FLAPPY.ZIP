@@ -64,10 +64,14 @@ public class StartupScript : MonoBehaviour
                 latestVersion = Int32.Parse(rawLatestVersion.Replace(".", string.Empty));
             } catch (FormatException)
             {
+                Debug.LogError("Failed to check for updates");
                 return;
             }
 
             newVersionAvailable = currentVersion < latestVersion;
+        } else
+        {
+            Debug.LogError("Failed to check for updates");
         }
     }
 
