@@ -8,7 +8,7 @@ public class StartTextScript : MonoBehaviour
     
     void Start()
     {
-        if (Application.isMobilePlatform || EditorUserBuildSettings.activeBuildTarget == BuildTarget.Android /*so changes also appear in editor*/)
+        if (Application.isMobilePlatform)
         {
             text.text = "tap to start";
         }
