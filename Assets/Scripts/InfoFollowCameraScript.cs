@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,11 @@ public class InfoFollowCameraScript : MonoBehaviour
 
     void Update()
     {
+        if (Application.isMobilePlatform || EditorUserBuildSettings.activeBuildTarget == BuildTarget.Android /*so changes also appear in editor*/)
+        {
+            text.text = "tap to\nskip";
+        }
+        
         if (cameraToFollow.transform.position.y <= -23 && cameraToFollow.GetComponent<Animator>().GetBool("inCredits"))
         {
             if (text.color.a != 0.7f)
