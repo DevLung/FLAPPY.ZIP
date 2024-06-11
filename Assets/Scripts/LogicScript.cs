@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Audio;
+using UnityEngine.EventSystems;
 
 public class LogicScript : MonoBehaviour
 {
@@ -68,11 +69,30 @@ public class LogicScript : MonoBehaviour
                 scoreTextObject.SetActive(false);
             }
 
-            if (Input.GetKeyDown(KeyCode.Space) && !cameraMovementScript.animator.GetBool("inCredits"))
+            if (Input.GetKeyDown(KeyCode.Space) || TouchInputExcludingUI(0, TouchPhase.Began)
+                && !cameraMovementScript.animator.GetBool("inCredits"))
             {
                 StartGame();
             }
         }
+    }
+
+    public bool TouchInput(int index, TouchPhase phase)
+    {
+        if (Input.touchCount > 0)
+        {
+            return Input.GetTouch(index).phase == phase;
+        }
+        return false;
+    }
+
+    public bool TouchInputExcludingUI(int index, TouchPhase phase)
+    {
+        if (TouchInput(index, phase))
+        {
+            return !EventSystem.current.IsPointerOverGameObject(Input.GetTouch(index).fingerId);
+        }
+        return false;
     }
 
     private void StartGame()

@@ -14,7 +14,8 @@ public class CameraMovementScript : MonoBehaviour
 
     void Update()
     {
-        if (animator.GetBool("inCredits") && Input.GetKeyDown(KeyCode.Escape))
+        if (animator.GetBool("inCredits") && 
+            (Input.GetKeyDown(KeyCode.Escape) || logic.TouchInput(0, TouchPhase.Began)))
         {
             StopCredits();
         }

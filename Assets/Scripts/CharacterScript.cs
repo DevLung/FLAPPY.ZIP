@@ -19,7 +19,8 @@ public class CharacterScript : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && birdIsAlive)
+        if (Input.GetKeyDown(KeyCode.Space) || logic.TouchInput(0, TouchPhase.Began)
+            && birdIsAlive)
         {
             Flap();
         }
