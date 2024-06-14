@@ -11,33 +11,52 @@ public class VolumeControlScript : MonoBehaviour
     public Text SFXVolumeText;
     public Slider musicVolumeSlider;
     public Text musicVolumeText;
-    const int MaxSliderValue = 100;
+    readonly string[] mixerGroups = { "master volume", "SFX volume", "Music volume" };
+    const float MaxVolume = 100.0f;
+    public float DefaultMasterVolume = 50.0f;
 
     void Start()
     {
-        // if some of the keys don't exist, add them on max volume
-        string[] mixerGroups = { "master volume", "SFX volume", "Music volume" };
-        foreach (string item in mixerGroups)
-        {
-            if (!PlayerPrefs.HasKey(item))
-            {
-                PlayerPrefs.SetFloat(item, MaxSliderValue);
-            }
-        }
+        SetInitialVolumeValues();
 
         // set volumes to saved values
         masterVolumeSlider.value = PlayerPrefs.GetFloat("master volume");
         ChangeMasterVolume();
         SFXVolumeSlider.value = PlayerPrefs.GetFloat("SFX volume");
-        ChangeSFXVolume();
-        musicVolumeSlider.value = PlayerPrefs.GetFloat("Music volume");
         ChangeMusicVolume();
+        musicVolumeSlider.value = PlayerPrefs.GetFloat("Music volume");
+        ChangeSFXVolume();
+    }
+
+    public void SetInitialVolumeValues()
+    {
+        // if some of the keys don't exist, add them on max volume
+        foreach (string item in mixerGroups)
+        {
+            if (!PlayerPrefs.HasKey(item))
+            {
+                PlayerPrefs.SetFloat(item, MaxVolume);
+                if (item == "master volume")
+                {
+                    PlayerPrefs.SetFloat(item, DefaultMasterVolume);
+                }
+            }
+        }
+    }
+
+    public void LoadVolumeSettings()
+    {
+        // if some of the keys don't exist, add them on max volume
+        foreach (string item in mixerGroups)
+        {
+            ChangeVolume(item, PlayerPrefs.GetFloat(item));
+        }
     }
 
     public void ChangeMasterVolume()
     {
         ChangeVolume("master volume", masterVolumeSlider.value);
-        masterVolumeText.text = (masterVolumeSlider.value).ToString();
+        masterVolumeText.text = (masterVolumeSlider.value * (MaxVolume / DefaultMasterVolume)).ToString();
     }
     public void ChangeSFXVolume()
     {
@@ -50,17 +69,17 @@ public class VolumeControlScript : MonoBehaviour
         musicVolumeText.text = (musicVolumeSlider.value).ToString();
     }
 
-    void ChangeVolume(string exposedVolumeParam, float sliderValue)
+    private void ChangeVolume(string exposedVolumeParam, float volumeValue)
     {
-        if (sliderValue <= 0.0001)
+        if (volumeValue <= 0.0001)
         {
             audioMixer.SetFloat(exposedVolumeParam, -80.0f);
         } else
         {
-            float gain = Mathf.Log10(sliderValue / MaxSliderValue) * 20.0f;
+            float gain = Mathf.Log10(volumeValue / MaxVolume) * 20.0f;
             audioMixer.SetFloat(exposedVolumeParam, gain);
         }
 
-        PlayerPrefs.SetFloat(exposedVolumeParam, sliderValue);
+        PlayerPrefs.SetFloat(exposedVolumeParam, volumeValue);
     }
 }

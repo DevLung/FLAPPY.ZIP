@@ -36,6 +36,7 @@ public class LogicScript : MonoBehaviour
     public GameObject uninstallConfirmationButtons;
     public Text uninstallButtonText;
     public DiscordManagerScript discordManagerScript;
+    public VolumeControlScript volumeControlScript;
     const int FadeIn = 1;
     const int FadeOut = 0;
 
@@ -54,6 +55,9 @@ public class LogicScript : MonoBehaviour
         highScore = PlayerPrefs.GetInt("high score");
         highScoreText.text = highScore.ToString();
 
+        // load sound settings
+        volumeControlScript.SetInitialVolumeValues();
+        volumeControlScript.LoadVolumeSettings();
         FadeMusicInOrOut("menu", 1.5f, FadeIn);
     }
 

@@ -7825,6 +7825,7 @@ MonoBehaviour:
   uninstallConfirmationButtons: {fileID: 1021146962}
   uninstallButtonText: {fileID: 1079439495}
   discordManagerScript: {fileID: 775961789}
+  volumeControlScript: {fileID: 1305747034}
 --- !u!4 &775961779
 Transform:
   m_ObjectHideFlags: 0
@@ -15410,6 +15411,7 @@ MonoBehaviour:
   SFXVolumeText: {fileID: 1369020456}
   musicVolumeSlider: {fileID: 1261267221}
   musicVolumeText: {fileID: 1453018854}
+  DefaultMasterVolume: 50
 --- !u!1 &1325147519
 GameObject:
   m_ObjectHideFlags: 0
