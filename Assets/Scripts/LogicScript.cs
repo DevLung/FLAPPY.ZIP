@@ -56,7 +56,6 @@ public class LogicScript : MonoBehaviour
         highScoreText.text = highScore.ToString();
 
         // load sound settings
-        volumeControlScript.SetInitialVolumeValues();
         volumeControlScript.LoadVolumeSettings();
         FadeMusicInOrOut("menu", 1.5f, FadeIn);
     }
@@ -123,13 +122,16 @@ public class LogicScript : MonoBehaviour
         scoreSound.Play();
 
         discordManagerScript.UpdateActivity(true);
-
     }
     public void AddHighScore(int amount)
     {
         highScore += amount;
         PlayerPrefs.SetInt("high score", highScore);
         highScoreText.text = highScore.ToString();
+        Color darkYellow = new(0.6f, 0.6f, 0);
+        highScoreText.color = darkYellow;
+        highScoreDescription.color = darkYellow;
+        highScoreDescription.text = "New High Score";
         overOldHighScore++;
         if (overOldHighScore == 1)
         {
@@ -166,6 +168,10 @@ public class LogicScript : MonoBehaviour
         characterRightWingAnimator.SetBool("noWingAnimation", true);
         gameOverScreen.SetActive(true);
         FadeMusicInOrOut("level", 3.0f, FadeOut);
+
+        // update high score in case it didn't properly update during game
+        int savedHighScore = PlayerPrefs.GetInt("high score");
+        AddHighScore(playerScore - savedHighScore);
     }
 
     private static IEnumerator FadeAudio(AudioMixer audioMixer, string exposedVolumeParam, AudioSource audioSource, float duration, float targetVolume)

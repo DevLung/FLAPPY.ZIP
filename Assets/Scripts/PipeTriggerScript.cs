@@ -19,10 +19,6 @@ public class PipeTriggerScript : MonoBehaviour
             if (logic.playerScore > logic.highScore)
             {
                 logic.AddHighScore(logic.playerScore - logic.highScore);
-                Color darkYellow = new(0.6f, 0.6f, 0);
-                logic.highScoreText.color = darkYellow;
-                logic.highScoreDescription.color = darkYellow;
-                logic.highScoreDescription.text = "New High Score";
             }
         }
     }

@@ -17,20 +17,16 @@ public class VolumeControlScript : MonoBehaviour
 
     void Start()
     {
-        SetInitialVolumeValues();
-
-        // set volumes to saved values
+        LoadVolumeSettings();
+        // set volume sliders to saved values
         masterVolumeSlider.value = PlayerPrefs.GetFloat("master volume");
-        ChangeMasterVolume();
         SFXVolumeSlider.value = PlayerPrefs.GetFloat("SFX volume");
-        ChangeMusicVolume();
         musicVolumeSlider.value = PlayerPrefs.GetFloat("Music volume");
-        ChangeSFXVolume();
     }
 
-    public void SetInitialVolumeValues()
+
+    public void LoadVolumeSettings()
     {
-        // if some of the keys don't exist, add them on max volume
         foreach (string item in mixerGroups)
         {
             if (!PlayerPrefs.HasKey(item))
@@ -41,14 +37,7 @@ public class VolumeControlScript : MonoBehaviour
                     PlayerPrefs.SetFloat(item, DefaultMasterVolume);
                 }
             }
-        }
-    }
 
-    public void LoadVolumeSettings()
-    {
-        // if some of the keys don't exist, add them on max volume
-        foreach (string item in mixerGroups)
-        {
             ChangeVolume(item, PlayerPrefs.GetFloat(item));
         }
     }
