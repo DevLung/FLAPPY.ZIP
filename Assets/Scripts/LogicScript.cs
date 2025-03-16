@@ -133,6 +133,7 @@ public class LogicScript : MonoBehaviour
         highScoreDescription.color = darkYellow;
         highScoreDescription.text = "New High Score";
         overOldHighScore++;
+        // only play new high score sound when high score is initially beaten
         if (overOldHighScore == 1)
         {
             newHighScoreSound.PlayDelayed(0.3f);
@@ -171,7 +172,10 @@ public class LogicScript : MonoBehaviour
 
         // update high score in case it didn't properly update during game
         int savedHighScore = PlayerPrefs.GetInt("high score");
-        AddHighScore(playerScore - savedHighScore);
+        if (savedHighScore < playerScore)
+        {
+            AddHighScore(playerScore - savedHighScore);
+        }
     }
 
     private static IEnumerator FadeAudio(AudioMixer audioMixer, string exposedVolumeParam, AudioSource audioSource, float duration, float targetVolume)
@@ -234,22 +238,5 @@ public class LogicScript : MonoBehaviour
     {
         PlayerPrefs.DeleteAll();
         RestartGame();
-    }
-
-    public void UninstallQuestion()
-    {
-        uninstallConfirmationButtons.SetActive(true);
-        uninstallButtonText.text = "ARE YOU SURE?";
-    }
-    public void UninstallAbort()
-    {
-        uninstallConfirmationButtons.SetActive(false);
-        uninstallButtonText.text = "Uninstall Game";
-    }
-    public void Uninstall()
-    {
-        PlayerPrefs.DeleteAll();
-        System.Diagnostics.Process.Start("powershell.exe", "-Command timeout /NOBREAK 5 ; rm -Recurse ./*");
-        Application.Quit();
     }
 }
