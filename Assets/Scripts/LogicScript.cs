@@ -33,8 +33,6 @@ public class LogicScript : MonoBehaviour
     public GameObject settingsMenu;
     public Text resetHighScoreButtonText;
     public HighScoreResetLogicScript resetHighScoreLogicScript;
-    public GameObject uninstallConfirmationButtons;
-    public Text uninstallButtonText;
     public DiscordManagerScript discordManagerScript;
     public VolumeControlScript volumeControlScript;
     const int FadeIn = 1;
@@ -72,8 +70,8 @@ public class LogicScript : MonoBehaviour
                 scoreTextObject.SetActive(false);
             }
 
-            if (Input.GetKeyDown(KeyCode.Space) || TouchInputExcludingUI(0, TouchPhase.Began)
-                && !cameraMovementScript.animator.GetBool("inCredits"))
+            if (!cameraMovementScript.animator.GetBool("inCredits")
+                && Input.GetKeyDown(KeyCode.Space) || TouchInputExcludingUI(0, TouchPhase.Began))
             {
                 StartGame();
             }
