@@ -127,6 +127,7 @@ public class LogicScript : MonoBehaviour
     {
         highScore += amount;
         PlayerPrefs.SetInt("high score", highScore);
+
         highScoreText.text = highScore.ToString();
         Color darkYellow = new(0.6f, 0.6f, 0);
         highScoreText.color = darkYellow;
